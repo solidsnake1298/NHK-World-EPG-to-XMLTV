@@ -49,7 +49,7 @@ URL_OF_NHK_JSON_ROOT: str = "https://masterpl.hls.nhkworld.jp/epg/w"
 URL_OF_NHK_ROOT: str = "https://www3.nhk.or.jp"
 
 # Location of the NHK channel icon
-URL_OF_NHK_CHANNEL_ICON: str = URL_OF_NHK_ROOT + "nhkworld/assets/images/icon_nhkworld_tv.png"
+URL_OF_NHK_CHANNEL_ICON: str = URL_OF_NHK_ROOT + "/nhkworld/assets/images/icon_nhkworld_tv.png"
 
 # The number of days to retrieve from NHK's EPG API
 DAYS = args.days
@@ -204,7 +204,7 @@ def Generate_xmltv_xml()  -> xml.Element:
             Add_xml_element(programme, 'sub-title', attributes={'lang': 'en'}, text=item["episodeTitle"] if item["episodeTitle"] else item["airingId"])
             Add_xml_element(programme, 'desc', attributes={'lang': 'en'}, text=item["description"])
             Add_xml_element(programme, 'episode-num', text=item["airingId"])
-            Add_xml_element(programme, 'icon', attributes={'src': item["episodeThumbnailURL"]})
+            Add_xml_element(programme, 'icon', attributes={'src': item["episodeThumbnailURL"] if item["episodeThumbnailURL"] else URL_OF_NHK_CHANNEL_ICON})
         delta += 1
 
     if not Xml_beautify(root):
